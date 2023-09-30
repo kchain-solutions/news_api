@@ -1,14 +1,40 @@
-# News api
+# News API
 
-This project implements a simplified Hexagonal architecture design
+This project is a simple example of API using a variant of hexagonal architecture.
 
-for more details about the project organization please read this document.
+## Caching
 
-For simplicity the cache is managed inside in the application memory. A better solution have would been to use a service as Redis.
+For simplicity, caching is managed internally within the application itself. For a more robust and scalable solution, a dedicated caching service like Redis is recommended.
 
-It's not managed the pagination because the GNews free tier doesn't allow it.
+## Pagination
 
-The application exposes two get API one to seach inside articles titles
+Note that pagination is not supported, as it is not a feature available in the free tier of the GNews API.
 
-onother one to search keywords inside body
+## API Endpoints
 
+The API exposes a GET method to search in the article title or in the content and description of the article.
+
+## Architecture
+
+This API is deployed using a [variation of Hexagonal architecture](https://medium.com/@daaru/lambda-hexagonal-architecture-variation-deb8612672cb).
+
+## Testing the Application
+
+To install the necessary dependencies, run:
+```bash
+npm install
+```
+
+To start the News API, execute:
+```bash
+npm run start:newsApi
+```
+
+To run unit tests:
+```bash
+npm run test
+```
+
+## API Documentation
+
+After the application is up and running, the API documentation can be accessed via [Swagger UI](http://localhost:3000/api-docs).

@@ -1,68 +1,85 @@
 import express from 'express'
-import swaggerJSDoc from 'swagger-jsdoc'
+import swaggerJsdoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
 import { NEWS_API_PORT } from '../../utils/environment.mjs'
 import logConnection from '../../utils/logConnection.mjs'
 import newsApiTitle from '../../ports/newsApi.mjs'
 
+
 const app = express()
+
 
 const options = {
     definition: {
-        openapi: '3.1.0',
+        openapi: '3.0.3',
         info: {
-            title: 'NewsApi swagger documentation',
-            version: '1.0.0',
+            title: 'News API Search',
+            version: '0.1.0',
+            description: 'Simple API to retreive data from GNEWS',
+            license: {
+                name: "MIT",
+                url: "https://spdx.org/licenses/MIT.html",
+            },
+            contact: {
+                name: "Valerio Mellini",
+                url: "https://kchain.solutions",
+                email: "valerio@kchain.solutions",
+            },
+
         },
+        servers: [
+            {
+                url: `http://localhost:${NEWS_API_PORT}`,
+            },
+        ],
     },
-    apis: ['./src/adapters/primary/*.mjs'],
-    servers: [
-        {
-            url: `http://localhost:${NEWS_API_PORT}`,
-        },
-    ]
-}
-const specs = swaggerJSDoc(options)
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs))
+    apis: ['./src/adapters/primary/newsApi.mjs'],
+    tags: [{ name: 'Articles' }]
+};
+
+const specs = swaggerJsdoc(options);
+app.use(
+    '/api-docs',
+    swaggerUi.serve,
+    swaggerUi.setup(specs)
+);
+
 
 
 console.log(`newsApi listening on port ${NEWS_API_PORT}...`)
 
 /**
  * @swagger
- * components:
- *   schemas:
- *     Book:
- *       type: object
- *       required:
- *         - title
- *         - author
- *         - finished
- *       params:
- *         id:
- *           type: string
- *           description: The auto-generated id of the book
- *         title:
- *           type: string
- *           description: The title of your book
- *         author:
- *           type: string
- *           description: The book author
- *         finished:
- *           type: boolean
- *           description: Whether you have finished reading the book
- *         createdAt:
- *           type: string
- *           format: date
- *           description: The date the book was added
- *       example:
- *         id: d5fE_asz
- *         title: The New Turing Omnibus
- *         author: Alexander K. Dewdney
- *         finished: false
- *         createdAt: 2020-03-10T04:05:06.157Z
+ * paths:
+ *   /api/v1/search:
+ *     get:
+ *       tags:
+ *         - Articles
+ *       description: Get a list of articles that matches with search term
+ *       parameters:
+ *         - in: query
+ *           name: q
+ *           required: true
+ *           description: Search query term
+ *           schema:
+ *             type: string
+ *         - in: query
+ *           name: search_type
+ *           description: Type of search (either 'keyword' or 'title'). A 'keyword' search scans the content and description, while a 'title' search focuses solely on the article titles.
+ *           schema:
+ *             type: string
+ *         - in: query
+ *           name: max_results
+ *           description: Maximum number of search results
+ *           schema:
+ *             type: integer
+ *       responses:
+ *         200:
+ *           description: Successful response
+ *         500:
+ *           description: Internal server error
  */
-app.get("/api/v1/search", async (req, res) => {
+app.get('/api/v1/search', async (req, res) => {
     try {
         logConnection(req)
         const response = await newsApiTitle({
@@ -73,7 +90,7 @@ app.get("/api/v1/search", async (req, res) => {
         res.status(200).send(response)
     } catch (error) {
         console.error(error)
-        res.status(400).send(error)
+        res.status(500).send(error)
     }
 })
 
