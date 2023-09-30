@@ -1,9 +1,10 @@
-import { GNEWS_ENDPOINT, GNEWS_APIKEY } from "../../utils/environment.mjs"
+import { GNEWS_ENDPOINT, GNEWS_APIKEY, APP_LANG } from "../../utils/environment.mjs"
 
-export async function query({ searchKey }) {
+export async function queryWithoutPagination({ searchKey }) {
     const searchParams = [
         ['q', searchKey],
         ['apikey', GNEWS_APIKEY],
+        ['lang', APP_LANG]
     ]
     const path = '/search'
 
