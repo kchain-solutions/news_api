@@ -1,12 +1,18 @@
 import { GNEWS_ENDPOINT, GNEWS_APIKEY, APP_LANG } from "../../utils/environment.mjs"
 
+/**
+ * The query return max 10 results
+ * 
+ * @param {Object} obj.searchKey 
+ * @returns {Object} response
+ */
 export async function queryWithoutPagination({ searchKey }) {
     const searchParams = [
         ['q', searchKey],
         ['apikey', GNEWS_APIKEY],
         ['lang', APP_LANG]
     ]
-    const path = '/search'
+    const path = '/api/v4/search'
 
     return await executeRequest(getEndpointUrl(path, searchParams), { method: 'GET' })
 }
@@ -52,5 +58,5 @@ async function executeRequest(url, options) {
         throw new Error(`gNews API Error: ${error}`)
     }
 
-    return { response: JSON.parse(response), totalResults: res.headers.get('Total') }
+    return JSON.parse(response)
 }

@@ -6,6 +6,6 @@ export function filterResult(responses, query) {
         return responses.articles.filter(article => article.title.toLowerCase().includes(q))
     }
     else {
-        throw new Error('Type error. not a valid response payload')
+        throw new Error('Type error: not a valid response payload')
     }
 }
