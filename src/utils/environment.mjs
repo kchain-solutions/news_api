@@ -1,7 +1,7 @@
 import 'dotenv/config'
 
 export const GNEWS_APIKEY = process.env.GNEWS_APIKEY
-export const GNEWS_ENDPOINT = "https://gnews.io/api/v4/search"
+export const GNEWS_ENDPOINT = "https://gnews.io/api/v4"
 export const NEWS_API_PORT = 3000
 export const NEWS_API_MAX_RES = 10
 

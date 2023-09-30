@@ -13,3 +13,7 @@ export function store(key, value) {
 export function retrieve(key) {
 
 }
+
+export function remove(key) {
+
+}

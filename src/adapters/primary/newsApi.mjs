@@ -6,9 +6,26 @@ import logConnection from '../../utils/logConnection.mjs';
 const app = express();
 console.log(`newsApi listening on port ${NEWS_API_PORT}...`)
 
-app.get("/author", (req, res) => {
+app.get("/title", (req, res) => {
     logConnection(req)
-    res.send("hello");
+
+    try {
+        res.send("title");
+    } catch (error) {
+
+    }
+
+});
+
+app.get("/keywords", (req, res) => {
+    logConnection(req)
+
+    try {
+        res.send("keyword");
+    } catch (error) {
+
+    }
+
 });
 
 
