@@ -6,6 +6,8 @@ This project is a simple example of API using a variant of hexagonal architectur
 
 For simplicity, caching is managed internally within the application itself. For a more robust and scalable solution, a dedicated caching service like Redis is recommended.
 
+The cache has a TTL of 24hrs.
+
 ## Pagination
 
 Note that pagination is not supported, as it is not a feature available in the free tier of the GNews API.
@@ -20,17 +22,23 @@ This API is deployed using a [variation of Hexagonal architecture](https://mediu
 
 ## Testing the Application
 
-To install the necessary dependencies, run:
+Create an GNews account and get an apikey.
+You have to save  ```GNEWS_APIKEY="8a.............24e"``` into a ```.env``` file.
+
+All other configuration parameters are saved into ```./src/utils/environment.mjs```
+
+
+#### To install the necessary dependencies, run:
 ```bash
 npm install
 ```
 
-To start the News API, execute:
+#### To start the News API, execute:
 ```bash
 npm run start:newsApi
 ```
 
-To run unit tests:
+#### To run unit tests:
 ```bash
 npm run test
 ```
