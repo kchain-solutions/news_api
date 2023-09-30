@@ -1,6 +1,6 @@
 import { GNEWS_ENDPOINT, GNEWS_APIKEY } from "../../utils/environment.mjs"
 
-export default async function ({ searchKey }) {
+export async function query({ searchKey }) {
     const searchParams = [
         ['q', searchKey],
         ['apikey', GNEWS_APIKEY],
