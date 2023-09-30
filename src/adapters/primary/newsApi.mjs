@@ -1,7 +1,7 @@
 import express from 'express'
 import swaggerJsdoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
-import { NEWS_API_PORT } from '../../utils/environment.mjs'
+import { NEWS_API_PORT, NEWSAPI_ENDPOINT } from '../../utils/environment.mjs'
 import logConnection from '../../utils/logConnection.mjs'
 import newsApiTitle from '../../ports/newsApi.mjs'
 
@@ -29,7 +29,7 @@ const options = {
         },
         servers: [
             {
-                url: `http://localhost:${NEWS_API_PORT}`,
+                url: `${NEWSAPI_ENDPOINT}:${NEWS_API_PORT}`,
             },
         ],
     },
@@ -47,6 +47,7 @@ app.use(
 
 
 console.log(`newsApi listening on port ${NEWS_API_PORT}...`)
+console.log(`Please open swagger: ${NEWSAPI_ENDPOINT}:${NEWS_API_PORT}/api-docs`)
 
 /**
  * @swagger
@@ -55,7 +56,12 @@ console.log(`newsApi listening on port ${NEWS_API_PORT}...`)
  *     get:
  *       tags:
  *         - Articles
- *       description: Get a list of articles that matches with search term
+ *       summary: Get articles
+ *       description: >- 
+ *          Get a list of articles that matches with search term
+ *          
+ *          Here a is a request url example: http://localhost:3000/api/v1/search?q=cardano%20bitcoin&search_type=keyword&max_results=5         
+ * 
  *       parameters:
  *         - in: query
  *           name: q

@@ -1,6 +1,6 @@
 import { store, retrieve } from '../adapters/secondary/cache.mjs'
 import { queryWithoutPagination } from '../adapters/secondary/gNewsApi.mjs'
-import { checkMaxResults, removeBlanks } from '../utils/searchParamsUtils.mjs'
+import { checkKeyword, checkMaxResults } from '../utils/searchParamsUtils.mjs'
 import { filterResult as filterResultKeyword } from '../domains/newsApiKeywords.mjs'
 import { filterResult as filterResultTitle } from '../domains/newsApiTitle.mjs'
 import ArraySizeManipulation from '../utils/ArraySizeManipulation.mjs'
@@ -8,7 +8,7 @@ import ArraySizeManipulation from '../utils/ArraySizeManipulation.mjs'
 
 export default async function ({ q, maxResults, searchType }, context = { queryWithoutPagination, store, retrieve }) {
     try {
-        q = removeBlanks(q)
+        q = checkKeyword(q)
         maxResults = checkMaxResults(maxResults)
         searchType = searchType ? searchType.toLowerCase() : 'keyword'
 
@@ -33,7 +33,7 @@ export default async function ({ q, maxResults, searchType }, context = { queryW
                 break
         }
 
-        return ArraySizeManipulation(res)
+        return ArraySizeManipulation(res, maxResults)
     } catch (error) {
         throw new Error(error)
     }

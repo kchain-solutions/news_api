@@ -1,7 +1,7 @@
 import { GNEWS_ENDPOINT, GNEWS_APIKEY, APP_LANG } from "../../utils/environment.mjs"
 
 /**
- * The query return max 10 results
+ * The query returns max 10 results
  * 
  * @param {Object} obj.searchKey 
  * @returns {Object} response
