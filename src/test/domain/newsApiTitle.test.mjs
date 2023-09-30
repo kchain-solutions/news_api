@@ -1,6 +1,7 @@
-import { filterResult } from '../../domains/newsApiTitle.mjs'
-import gNewsResponse from '../data/gNewsResponse.json'
 import { test, expect } from 'vitest'
+import { filterResult } from '../../domains/newsApiTitle.mjs'
+
+import gNewsResponse from '../data/gNewsResponse.json'
 
 test('Should filter responses by title and return 1', () => {
     const results = filterResult(gNewsResponse, "MUJJO leather iPhone 15")

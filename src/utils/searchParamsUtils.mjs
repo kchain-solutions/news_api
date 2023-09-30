@@ -12,9 +12,9 @@ export function restoreBlanks(s) {
         throw new Error('Type error input has to be a string')
 }
 
-export function splittingString(s) {
+export function splitString(s) {
     if (typeof s === 'string')
-        return s.split(' ')
+        return s.split(' ').map(el => el.toLowerCase().trim())
     else
         throw new Error('Type error input has to be a string')
 }
