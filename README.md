@@ -52,6 +52,22 @@ The API exposes a GET method to search in the article title or in the content an
 
 ### Architecture
 
-This API is deployed using a [variation of Hexagonal architecture](https://medium.com/@daaru/lambda-hexagonal-architecture-variation-deb8612672cb).
+The project is developed using a [variation of hexagonal architecture](https://medium.com/@daaru/lambda-hexagonal-architecture-variation-deb8612672cb).
+
+![](img/hexagonal.webp)
+
+Thanks to [Fabio Gollinucci](https://daaru.medium.com/)
+
+#### Primary adapter
+Entry point ```src/adapters/primary/newsApi.mjs```
+
+#### Secondary adapter
+Integrations to extenal API ```src/adapters/secondary/gNewsApi.mjs``` or storage ```src/adapters/secondary/cache.mjs```
+ 
+#### Ports
+Connector between adapters and domain logic ```src/ports/newsApi.mjs```
+
+#### Domain
+Application logics ```src/domains/newsApiContents.mjs``` ```src/domains/newsApiTitle.mjs```
 
 
