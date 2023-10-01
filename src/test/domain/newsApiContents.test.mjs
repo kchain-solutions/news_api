@@ -1,5 +1,5 @@
 import { test, expect } from 'vitest'
-import { filterResult } from "../../domains/newsApiKeywords.mjs"
+import { filterResult } from "../../domains/newsApiContents.mjs"
 
 import gNewsResponse from '../data/gNewsResponse.json'
 
