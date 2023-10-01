@@ -6,12 +6,15 @@ import { GNEWS_ENDPOINT, GNEWS_APIKEY, APP_LANG } from "../../utils/environment.
  * @param {Object} obj.searchKey 
  * @returns {Object} response
  */
-export async function queryWithoutPagination({ searchKey }) {
+export async function queryWithoutPagination({ searchKey, searchField }) {
+
     const searchParams = [
         ['q', searchKey],
+        ['in', searchField],
         ['apikey', GNEWS_APIKEY],
         ['lang', APP_LANG]
     ]
+
     const path = '/api/v4/search'
 
     return await executeRequest(getEndpointUrl(path, searchParams), { method: 'GET' })

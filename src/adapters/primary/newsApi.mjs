@@ -47,7 +47,7 @@ app.use(
 
 
 console.log(`newsApi listening on port ${NEWS_API_PORT}...`)
-console.log(`Please open swagger: ${NEWSAPI_ENDPOINT}:${NEWS_API_PORT}/api-docs`)
+console.log(`Please open swagger: ${NEWSAPI_ENDPOINT}:${NEWS_API_PORT}/api-docs/#/Articles/get_api_v1_search`)
 
 /**
  * @swagger
@@ -60,7 +60,8 @@ console.log(`Please open swagger: ${NEWSAPI_ENDPOINT}:${NEWS_API_PORT}/api-docs`
  *       description: >- 
  *          Get a list of articles that matches with search term
  *          
- *          Here a is a request url example: http://localhost:3000/api/v1/search?q=cardano%20bitcoin&search_type=keyword&max_results=5         
+ *          Here a is a request url example: 
+ *          http://localhost:3000/api/v1/search?q=cardano%20bitcoin&search_type=keyword&max_results=5         
  * 
  *       parameters:
  *         - in: query
@@ -71,7 +72,7 @@ console.log(`Please open swagger: ${NEWSAPI_ENDPOINT}:${NEWS_API_PORT}/api-docs`
  *             type: string
  *         - in: query
  *           name: search_type
- *           description: Type of search (either 'keyword' or 'title'). A 'keyword' search scans the content and description, while a 'title' search focuses solely on the article titles.
+ *           description: Type of search (either 'content' or 'title'). A 'content' search scans the content and description, while a 'title' search focuses on the article titles.
  *           schema:
  *             type: string
  *         - in: query
