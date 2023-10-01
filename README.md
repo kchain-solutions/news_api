@@ -27,7 +27,7 @@ npm run test
 
 ## API Documentation
 
-After the application is up and running, the API documentation can be accessed via [Swagger UI](http://localhost:3000/api-docs).
+After the application is up and running, the API documentation can be accessed via [Swagger UI](http://localhost:3000/api-docs/#/Articles/get_api_v1_search).
 
 ## Solution decisions
 
