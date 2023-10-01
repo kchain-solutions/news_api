@@ -3,35 +3,38 @@ import { queryWithoutPagination } from '../adapters/secondary/gNewsApi.mjs'
 import { checkKeyword, checkMaxResults } from '../utils/searchParamsUtils.mjs'
 import { filterResult as filterResultKeyword } from '../domains/newsApiKeywords.mjs'
 import { filterResult as filterResultTitle } from '../domains/newsApiTitle.mjs'
+import { NEWS_API_MAX_SIZE } from '../utils/environment.mjs'
 import ArraySizeManipulation from '../utils/ArraySizeManipulation.mjs'
 
 
 export default async function ({ q, maxResults, searchType }, context = { queryWithoutPagination, store, retrieve }) {
     try {
         q = checkKeyword(q)
-        maxResults = checkMaxResults(maxResults)
-        searchType = searchType ? searchType.toLowerCase() : 'keyword'
+        maxResults = maxResults ? checkMaxResults(maxResults) : NEWS_API_MAX_SIZE
+        searchType = searchType ? searchType.toLowerCase() : 'content'
 
         const cacheKey = `${q}${searchType}`
         let res = []
 
-        res = await context.retrieve(cacheKey)
-        if (!res) {
-            res = await context.queryWithoutPagination({ searchKey: q })
-            context.store(cacheKey, res)
-        }
-
         switch (searchType) {
-            case 'keyword':
+            case 'content':
+                res = await context.retrieve(cacheKey)
+                if (!res) res = await context.queryWithoutPagination({ searchKey: q, searchField: "description,content" })
                 res = filterResultKeyword(res, q)
                 break
             case 'title':
+                res = await context.retrieve(cacheKey)
+                if (!res) res = await context.queryWithoutPagination({ searchKey: q, searchField: "title" })
                 res = filterResultTitle(res, q)
                 break
             default:
+                res = await context.retrieve(cacheKey)
+                if (!res) res = await context.queryWithoutPagination({ searchKey: q, searchField: "description,content" })
                 res = filterResultKeyword(res, q)
                 break
         }
+
+        context.store(cacheKey, res)
 
         return ArraySizeManipulation(res, maxResults)
     } catch (error) {
