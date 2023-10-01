@@ -1,7 +1,7 @@
 import { store, retrieve } from '../adapters/secondary/cache.mjs'
 import { queryWithoutPagination } from '../adapters/secondary/gNewsApi.mjs'
 import { checkKeyword, checkMaxResults } from '../utils/searchParamsUtils.mjs'
-import { filterResult as filterResultKeyword } from '../domains/newsApiKeywords.mjs'
+import { filterResult as filterResultContents } from '../domains/newsApiContents.mjs'
 import { filterResult as filterResultTitle } from '../domains/newsApiTitle.mjs'
 import { NEWS_API_MAX_SIZE } from '../utils/environment.mjs'
 import ArraySizeManipulation from '../utils/ArraySizeManipulation.mjs'
@@ -20,7 +20,7 @@ export default async function ({ q, maxResults, searchType }, context = { queryW
             case 'content':
                 res = await context.retrieve(cacheKey)
                 if (!res) res = await context.queryWithoutPagination({ searchKey: q, searchField: "description,content" })
-                res = filterResultKeyword(res, q)
+                res = filterResultContents(res, q)
                 break
             case 'title':
                 res = await context.retrieve(cacheKey)
@@ -30,7 +30,7 @@ export default async function ({ q, maxResults, searchType }, context = { queryW
             default:
                 res = await context.retrieve(cacheKey)
                 if (!res) res = await context.queryWithoutPagination({ searchKey: q, searchField: "description,content" })
-                res = filterResultKeyword(res, q)
+                res = filterResultContents(res, q)
                 break
         }
 
